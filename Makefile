@@ -1,4 +1,4 @@
-# This is jst a template... PPR can be built manually pretty easily
+# This is just a template... PPR can be built manually pretty easily
 
 CC = gcc
 AR = ar
