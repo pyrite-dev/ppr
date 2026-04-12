@@ -3,7 +3,7 @@
 CC = gcc
 AR = ar
 
-.PHONY: all install clean
+.PHONY: all format clean
 .SUFFIXES: .c .o
 
 OBJS = src/core.o
@@ -13,6 +13,9 @@ OBJS += src/hash/md5.o src/hash/sha256.o src/hash/blake2s.o
 OBJS += src/misc/url.o src/misc/wildcard.o
 
 all: libppr.a
+
+format:
+	clang-format --verbose -i `find src include -name "*.c" -or -name "*.h"`
 
 .c.o:
 	$(CC) -c -I include -o $@ $<
