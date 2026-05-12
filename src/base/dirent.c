@@ -52,6 +52,8 @@ struct ppr_dirent* ppr_readdir(PPR_DIR* handle) {
 	if(!dir->next) return NULL;
 
 	strcpy(dir->dirent.d_name, dir->ffd.cFileName);
+
+	dir->next = FindNextFile(dir->hFind, &dir->ffd);
 #else
 	struct dirent* d;
 
