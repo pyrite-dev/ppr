@@ -210,6 +210,7 @@ void* ppr_process_create(const char* exec, char** env);
 void  ppr_process_close(void* handle);
 int   ppr_process_write(void* handle, const void* data, int len);
 int   ppr_process_read(void* handle, void* data, int len);
+int   ppr_process_readable(void* handle);
 void  ppr_process_destroy(void* handle);
 
 /* dirent.c */

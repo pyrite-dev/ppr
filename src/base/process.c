@@ -245,6 +245,29 @@ int ppr_process_read(void* handle, void* data, int len) {
 #endif
 }
 
+int ppr_process_readable(void* handle) {
+	process_t* proc = handle;
+#if defined(PPR_IS_WIN32)
+	DWORD avail;
+
+	if(!PeekNamedPipe(proc->h_stdout, NULL, 0, NULL, &avail, NULL)) return 0;
+
+	return (avail > 0) ? 1 : 0;
+#elif defined(FPR_IS_UNIX)
+	struct ppr_pollfd pfd;
+	int		  n;
+
+	pfd.fd	   = proc->fd_stdout;
+	pfd.events = FPR_POLLIN | FPR_POLLPRI;
+
+	if((n = ppr_poll(&pfd, 1, 0)) < 0) return 0;
+
+	return (n > 0) ? 1 : 0;
+#else
+	return 0;
+#endif
+}
+
 void ppr_process_destroy(void* handle) {
 	process_t* proc = handle;
 #if defined(PPR_IS_WIN32)
