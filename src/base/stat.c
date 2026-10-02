@@ -3,15 +3,15 @@
 
 int ppr_stat(const char* path, struct ppr_stat* s) {
 #if defined(PPR_IS_WIN32)
-	DWORD attr;
-	ULARGE_INTEGER		  mtime;
-	PPR_FILE* f;
-	FILETIME ft;
+	DWORD	       attr;
+	ULARGE_INTEGER mtime;
+	PPR_FILE*      f;
+	FILETIME       ft;
 
 	if((attr = GetFileAttributes(path)) == INVALID_FILE_ATTRIBUTES) return -1;
 
 	f = ppr_fopen(path, "r"); /* :))))))) */
-	
+
 	GetFileTime((HANDLE)f, NULL, NULL, &ft);
 
 	memcpy(&mtime, &ft, sizeof(mtime));
@@ -27,9 +27,9 @@ int ppr_stat(const char* path, struct ppr_stat* s) {
 	}
 
 	if(PPR_S_ISREG(s->st_mode)) {
-		s->st_size  = GetFileSize((HANDLE)f, NULL);
+		s->st_size = GetFileSize((HANDLE)f, NULL);
 	}
-	
+
 	ppr_fclose(f);
 
 	return 0;

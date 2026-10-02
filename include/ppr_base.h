@@ -19,6 +19,12 @@ struct ppr_pollfd {
 /* file.c definitions */
 typedef void PPR_FILE;
 
+enum PPR_SEEK {
+	PPR_SEEK_SET = 0,
+	PPR_SEEK_CUR,
+	PPR_SEEK_END
+};
+
 /* socket.c definitions */
 enum ppr_socket_protocol {
 	PPR_PF_UNSPEC = 0,
@@ -144,6 +150,8 @@ int ppr_poll(struct ppr_pollfd* fds, int nfds, int timeout);
 PPR_FILE* ppr_fopen(const char* path, const char* mode);
 int	  ppr_fread(void* ptr, int size, int nmemb, PPR_FILE* stream);
 int	  ppr_fwrite(const void* ptr, int size, int nmemb, PPR_FILE* stream);
+void	  ppr_fseek(PPR_FILE* stream, long offset, int method);
+long	  ppr_ftell(PPR_FILE* ptr);
 void	  ppr_fclose(PPR_FILE* stream);
 
 /* socket.c */

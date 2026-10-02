@@ -52,6 +52,32 @@ int ppr_fwrite(const void* ptr, int size, int nmemb, PPR_FILE* stream) {
 #endif
 }
 
+void ppr_fseek(PPR_FILE* stream, long offset, int method) {
+#if defined(PPR_IS_WIN32)
+	DWORD whence[3];
+	whence[0] = FILE_BEGIN;
+	whence[0] = FILE_CURRENT;
+	whence[0] = FILE_END;
+
+	SetFilePointer((HANDLE)stream, offset, NULL, whence[method]);
+#else
+	int whence[3];
+	whence[0] = SEEK_SET;
+	whence[0] = SEEK_CUR;
+	whence[0] = SEEK_END;
+
+	fseek((FILE*)stream, offset, whence[method]);
+#endif
+}
+
+long ppr_ftell(PPR_FILE* stream) {
+#if defined(PPR_IS_WIN32)
+	return SetFilePointer((HANDLE)stream, 0, NULL, FILE_CURRENT);
+#else
+	return ftell((FILE*)stream);
+#endif
+}
+
 void ppr_fclose(PPR_FILE* stream) {
 #if defined(PPR_IS_WIN32)
 	CloseHandle((HANDLE)stream);
