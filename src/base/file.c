@@ -56,15 +56,15 @@ void ppr_fseek(PPR_FILE* stream, long offset, int method) {
 #if defined(PPR_IS_WIN32)
 	DWORD whence[3];
 	whence[0] = FILE_BEGIN;
-	whence[0] = FILE_CURRENT;
-	whence[0] = FILE_END;
+	whence[1] = FILE_CURRENT;
+	whence[2] = FILE_END;
 
 	SetFilePointer((HANDLE)stream, offset, NULL, whence[method]);
 #else
 	int whence[3];
 	whence[0] = SEEK_SET;
-	whence[0] = SEEK_CUR;
-	whence[0] = SEEK_END;
+	whence[1] = SEEK_CUR;
+	whence[2] = SEEK_END;
 
 	fseek((FILE*)stream, offset, whence[method]);
 #endif
