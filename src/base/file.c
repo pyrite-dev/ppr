@@ -12,7 +12,7 @@ PPR_FILE* ppr_fopen(const char* path, const char* mode) {
 		ac  = GENERIC_READ;
 		dis = OPEN_EXISTING;
 	} else if(mode[0] == 'w') {
-		ac  = GENERIC_WRITE;
+		ac  = GENERIC_WRITE | GENERIC_READ; /* appearantly this is recommended */
 		dis = CREATE_ALWAYS;
 	} else if(mode[0] == 'a') {
 		ac  = GENERIC_WRITE | FILE_APPEND_DATA;

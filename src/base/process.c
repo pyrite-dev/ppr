@@ -52,7 +52,7 @@ void* ppr_process_create(const char* exec, char** env) {
 		d_envs2 += strlen(d_envs2) + 1;
 	}
 
-	for(i = 0; env[i] != NULL; i++) envs_len += strlen(env[i]) + 1;
+	for(i = 0; env != NULL && env[i] != NULL; i++) envs_len += strlen(env[i]) + 1;
 	envs_len++;
 
 	envs	 = malloc(envs_len);
@@ -68,7 +68,7 @@ void* ppr_process_create(const char* exec, char** env) {
 		d_envs2 += strlen(d_envs2) + 1;
 	}
 
-	for(i = 0; env[i] != NULL; i++) {
+	for(i = 0; env != NULL && env[i] != NULL; i++) {
 		strcpy(envs + envs_len, env[i]);
 		envs_len += strlen(env[i]) + 1;
 	}
